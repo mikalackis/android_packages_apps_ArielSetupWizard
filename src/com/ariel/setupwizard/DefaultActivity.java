@@ -45,6 +45,8 @@ public class DefaultActivity extends Activity {
 
     public static final String TAG = "DefaultActivity";
 
+    private static final String GOOGLE_BACKUP_TRANSPORT = "com.google.android.gms/.backup.BackupTransportService";
+
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -105,6 +107,29 @@ public class DefaultActivity extends Activity {
                 IBackupManager ibm = IBackupManager.Stub.asInterface(
                         ServiceManager.getService(Context.BACKUP_SERVICE));
                 ibm.setBackupServiceActive(UserHandle.USER_OWNER, true);
+
+                // try to find google backup transport
+                // and set it
+                String[] availableTransports = ibm.listAllTransports();
+                for(int i=0; i<availableTransports.length; i++){
+                    String tmpTransport = availableTransports[i];
+                    Slog.i(TAG, "Checking transport: "+tmpTransport);
+                    if(tmpTransport.contains("google")){
+                        Slog.i(TAG, "Found transport with google");
+                        // ok there is something with google
+                        if(tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT)){
+                            Slog.i(TAG, "Bingo! Google backup transport found");
+                            // this is the one we need, set it
+                            ibm.selectBackupTransport(tmpTransport);
+                            break;
+                        }
+                        else{
+                            // this is weird, it has google but not the one we know about
+                            Slog.i(TAG, "Weird! Google backup transport " +
+                                    "found but not the one we need: "+tmpTransport);
+                        }
+                    }
+                }
             } catch (RemoteException e) {
                 throw new IllegalStateException("Failed activating backup service.", e);
             }
