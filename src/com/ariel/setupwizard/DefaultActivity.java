@@ -57,8 +57,8 @@ public class DefaultActivity extends Activity {
 
         Button btnGapps = (Button)findViewById(R.id.btn_install_gapps);
 
-        isGoogleApsPresent = checkApplication("com.google.android.gsf");
-        if(isGoogleApsPresent){
+        isGoogleAppsPresent = checkApplication("com.google.android.gsf");
+        if(isGoogleAppsPresent){
             btnGapps.setVisibility(View.GONE);
         }
         else{
@@ -112,7 +112,7 @@ public class DefaultActivity extends Activity {
 
                 // try to find google backup transport
                 // and set it, only if google apps are installed
-                if(isGoogleApsPresent){
+                if(isGoogleAppsPresent){
                     String[] availableTransports = ibm.listAllTransports();
                     for(int i=0; i<availableTransports.length; i++){
                         String tmpTransport = availableTransports[i];
