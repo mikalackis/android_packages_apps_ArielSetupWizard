@@ -32,9 +32,13 @@ import android.os.UserHandle;
 import android.os.RemoteException;
 import android.os.RecoverySystem;
 import android.widget.Button;
+
 import java.io.File;
+
 import android.os.Environment;
+
 import java.io.IOException;
+
 import android.content.pm.ApplicationInfo;
 
 /**
@@ -50,20 +54,23 @@ public class DefaultActivity extends Activity {
     private static final String GOOGLE_BACKUP_TRANSPORT2 = "com.google.android.backup/.BackupTransportService";
 
     private boolean isGoogleAppsPresent = false;
+    adb shell
+    bmgr transport
+    com.google.android.backup/.BackupTransportService
 
     @Override
+
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         setContentView(R.layout.main);
 
-        Button btnGapps = (Button)findViewById(R.id.btn_install_gapps);
+        Button btnGapps = (Button) findViewById(R.id.btn_install_gapps);
 
-        isGoogleAppsPresent = checkApplication("com.google.android.gsf");
-        if(isGoogleAppsPresent){
+        isGoogleApsPresent = checkApplication("com.google.android.gsf");
+        if (isGoogleApsPresent) {
             btnGapps.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             btnGapps.setVisibility(View.VISIBLE);
         }
 
@@ -84,14 +91,13 @@ public class DefaultActivity extends Activity {
         }
     }
 
-    public void onGappsButtonClick(View v){
+    public void onGappsButtonClick(View v) {
         try {
-            File updateFile = new File(Environment.getExternalStorageDirectory()+"/updates/open_gapps-arm64-7.1-mini-20170414.zip");
-            if(updateFile.exists()){
+            File updateFile = new File(Environment.getExternalStorageDirectory() + "/updates/open_gapps-arm64-7.1-mini-20170414.zip");
+            if (updateFile.exists()) {
                 RecoverySystem.installPackage(this, updateFile);
-            }
-            else{
-                Slog.i(TAG, "Package doesnt exist: "+updateFile.getAbsolutePath());
+            } else {
+                Slog.i(TAG, "Package doesnt exist: " + updateFile.getAbsolutePath());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +111,7 @@ public class DefaultActivity extends Activity {
 
         int isDeviceProvisioned = Settings.Global.getInt(getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0);
 
-        if(isDeviceProvisioned==0){
+        if (isDeviceProvisioned == 0) {
             setDeviceOwner();
             try {
                 IBackupManager ibm = IBackupManager.Stub.asInterface(
@@ -114,33 +120,41 @@ public class DefaultActivity extends Activity {
 
                 // try to find google backup transport
                 // and set it, only if google apps are installed
-                if(isGoogleAppsPresent){
+                if (isGoogleApsPresent) {
                     String[] availableTransports = ibm.listAllTransports();
-                    for(int i=0; i<availableTransports.length; i++){
+
+                    boolean found = false;
+
+                    for (int i = 0; i < availableTransports.length; i++) {
                         String tmpTransport = availableTransports[i];
-                        Slog.i(TAG, "Checking transport: "+tmpTransport);
-                        if(tmpTransport.contains("google")){
-                            Slog.i(TAG, "Found transport with google");
-                            // ok there is something with google
-                            if(tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT)){
-                                Slog.i(TAG, "Bingo! Google backup transport found");
-                                // this is the one we need, set it
-                                ibm.selectBackupTransport(tmpTransport);
-                                break;
-                            }
-                            else{
-                                // this is weird, it has google but not the one we know about
-                                Slog.i(TAG, "Weird! Google backup transport " +
-                                        "found but not the one we need: "+tmpTransport);
-                            }
+                        Slog.i(TAG, "Checking transport: " + tmpTransport);
+                        if (tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT1) ||
+                                tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT2)) {
+                            Slog.i(TAG, "Bingo! Google backup transport found");
+                            // this is the one we need, set it
+                            ibm.selectBackupTransport(tmpTransport);
+                            found = true;
+                            break;
+                        } else {
+                            // this is weird, it has google but not the one we know about
+                            Slog.i(TAG, "Weird! Backup transport " +
+                                    "found but not the one we need: " + tmpTransport);
                         }
+                    }
+
+                    if(!found){
+                        Slog.i(TAG, "We didnt find google backup while gapps are present. Force.");
+                        ibm.selectBackupTransport(GOOGLE_BACKUP_TRANSPORT1);
+                    }
+                    else{
+                        Slog.i(TAG, "All cool, google backup transport set");
                     }
                 }
             } catch (RemoteException e) {
                 throw new IllegalStateException("Failed activating backup service.", e);
             }
 
-            if(!isPackageInstalled("com.google.android.setupwizard", pm)){
+            if (!isPackageInstalled("com.google.android.setupwizard", pm)) {
                 // provisioning complete!
                 Settings.Global.putInt(getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 1);
                 Settings.Secure.putInt(getContentResolver(), Settings.Secure.USER_SETUP_COMPLETE, 1);
@@ -183,7 +197,7 @@ public class DefaultActivity extends Activity {
             // second, set ourselves as device owner
             // btw at this point bellow code wont work
             // because the upper statement will cause an exception :)
-            boolean result = mDPM.setDeviceOwner(cn, "ArielGuardian");
+            boolean result = mDPM.setDeviceOwner("com.ariel.guardian", "ArielGuardian");
             if (result) {
                 Slog.i(TAG, "Setting device owner success!");
             } else {
@@ -194,7 +208,7 @@ public class DefaultActivity extends Activity {
         } catch (IllegalStateException e) {
             Slog.e("ArielSystemServer", "Set active admin failed!!");
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             Slog.e("ArielSystemServer", "Set active admin failed!!");
             e.printStackTrace();
         }
@@ -203,4 +217,3 @@ public class DefaultActivity extends Activity {
     }
 
 }
-
