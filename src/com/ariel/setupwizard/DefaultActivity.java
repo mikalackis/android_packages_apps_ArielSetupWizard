@@ -54,12 +54,8 @@ public class DefaultActivity extends Activity {
     private static final String GOOGLE_BACKUP_TRANSPORT2 = "com.google.android.backup/.BackupTransportService";
 
     private boolean isGoogleAppsPresent = false;
-    adb shell
-    bmgr transport
-    com.google.android.backup/.BackupTransportService
 
     @Override
-
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
@@ -67,8 +63,8 @@ public class DefaultActivity extends Activity {
 
         Button btnGapps = (Button) findViewById(R.id.btn_install_gapps);
 
-        isGoogleApsPresent = checkApplication("com.google.android.gsf");
-        if (isGoogleApsPresent) {
+        isGoogleAppsPresent = checkApplication("com.google.android.gsf");
+        if (isGoogleAppsPresent) {
             btnGapps.setVisibility(View.GONE);
         } else {
             btnGapps.setVisibility(View.VISIBLE);
@@ -120,7 +116,7 @@ public class DefaultActivity extends Activity {
 
                 // try to find google backup transport
                 // and set it, only if google apps are installed
-                if (isGoogleApsPresent) {
+                if (isGoogleAppsPresent) {
                     String[] availableTransports = ibm.listAllTransports();
 
                     boolean found = false;
