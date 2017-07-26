@@ -49,7 +49,9 @@ public class DefaultActivity extends Activity {
 
     public static final String TAG = "DefaultActivity";
 
-    private static final String GOOGLE_BACKUP_TRANSPORT = "com.google.android.gms/.backup.BackupTransportService";
+    private static final String GOOGLE_BACKUP_TRANSPORT1 = "com.google.android.gms/.backup.BackupTransportService";
+
+    private static final String GOOGLE_BACKUP_TRANSPORT2 = "com.google.android.backup/.BackupTransportService";
 
     private boolean isGoogleAppsPresent = false;
 
