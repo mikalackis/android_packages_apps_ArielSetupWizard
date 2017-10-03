@@ -218,7 +218,7 @@ public class PhoneMonitor {
     }
 
     public String getSimOperatorName(int subId) {
-        return mTelephony.getSimOperatorNameForSubscription(subId);
+        return mTelephony.getSimOperatorName(subId);
     }
 
     public String getNetworkOperatorName(int subId) {
