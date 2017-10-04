@@ -75,8 +75,8 @@ public class ManualTestActivity extends Activity {
             intent.addCategory("android.intent.category.HOME");
             resetComponentSets("com.ariel.setupwizard", GET_ACTIVITIES |
                     GET_RECEIVERS | GET_SERVICES | MATCH_DISABLED_COMPONENTS);
-            resetComponentSets("com.google.android.setupwizard", GET_ACTIVITIES |
-                    GET_RECEIVERS | GET_SERVICES | MATCH_DISABLED_COMPONENTS);
+//            resetComponentSets("com.google.android.setupwizard", GET_ACTIVITIES |
+//                    GET_RECEIVERS | GET_SERVICES | MATCH_DISABLED_COMPONENTS);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | intent.getFlags());
             startActivity(intent);
             finish();

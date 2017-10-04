@@ -2,7 +2,7 @@
 
 <!--
      Copyright (C) 2016 The ariel Project
-     Copyright (C) 2017 The LineageOS Project
+     Copyright (C) 2017 The ARIELOS Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,56 +20,56 @@
 <WizardScript xmlns:wizard="http://schemas.android.com/apk/res/com.google.android.setupwizard"
     wizard:firstAction="bluetooth_setup">
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_BLUETOOTH_SETUP;end" id="bluetooth_setup">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_BLUETOOTH_SETUP;end" id="bluetooth_setup">
         <result wizard:action="welcome" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_WELCOME;end" id="welcome">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_WELCOME;end" id="welcome">
         <result wizard:action="locale" />
     </WizardAction>
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_LOCALE;end" id="locale">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_LOCALE;end" id="locale">
         <result wizard:action="datetime" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_DATETIME;end" id="datetime">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_DATETIME;end" id="datetime">
         <result wizard:action="wifi_setup" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_WIFI_SETUP;end" id="wifi_setup">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_WIFI_SETUP;end" id="wifi_setup">
         <result wizard:resultCode="1" wizard:action="sim_missing" wizard:name="no_sim" />
         <result wizard:action="choose_data_sim" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_SIM_MISSING;end" id="sim_missing">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_SIM_MISSING;end" id="sim_missing">
         <result wizard:resultCode="1" wizard:action="location_settings" wizard:name="skip_sim" />
         <result wizard:action="choose_data_sim" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_CHOOSE_DATA_SIM;end" id="choose_data_sim">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_CHOOSE_DATA_SIM;end" id="choose_data_sim">
         <result wizard:action="enable_mobile_data" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_ENABLE_MOBILE_DATA;end" id="enable_mobile_data">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_ENABLE_MOBILE_DATA;end" id="enable_mobile_data">
         <result wizard:action="location_settings" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_LOCATION_SETTINGS;end" id="location_settings">
-        <result wizard:action="lineage_settings" />
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_LOCATION_SETTINGS;end" id="location_settings">
+        <result wizard:action="ARIEL_settings" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_SETTINGS;end" id="lineage_settings">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_SETTINGS;end" id="ARIEL_settings">
         <result wizard:action="fingerprint_settings" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_FINGERPRINT_SETTINGS;end" id="fingerprint_settings">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_FINGERPRINT_SETTINGS;end" id="fingerprint_settings">
         <result wizard:action="lockscreen_settings" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_LOCKSCREEN_SETTINGS;end" id="lockscreen_settings">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_LOCKSCREEN_SETTINGS;end" id="lockscreen_settings">
         <result wizard:action="finish" />
     </WizardAction>
 
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.LINEAGE_SETUP_COMPLETE;end" id="finish">
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_SETUP_COMPLETE;end" id="finish">
         <result wizard:action="exit" />
     </WizardAction>
     <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.EXIT;end" id="exit" />

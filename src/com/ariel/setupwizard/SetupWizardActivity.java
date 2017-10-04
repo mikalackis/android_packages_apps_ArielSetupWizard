@@ -40,28 +40,30 @@ public class SetupWizardActivity extends BaseSetupWizardActivity {
         if (LOGV) {
             Log.v(TAG, "onCreate savedInstanceState=" + savedInstanceState);
         }
-        if (SetupWizardUtils.hasGMS(this)) {
-            if (LOGV) {
-                Log.v(TAG, "Has GMS disabling local wizard manager");
-            }
-            Intent intent = new Intent("android.intent.action.MAIN");
-            intent.addCategory("android.intent.category.HOME");
-            SetupWizardUtils.disableComponentsForGMS(this);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        } else {
+//        if (SetupWizardUtils.hasGMS(this)) {
+//            if (LOGV) {
+//                Log.v(TAG, "Has GMS disabling local wizard manager");
+//            }
+//            Intent intent = new Intent("android.intent.action.MAIN");
+//            intent.addCategory("android.intent.category.HOME");
+//            SetupWizardUtils.disableComponentsForGMS(this);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+//            finish();
+//        } else {
             onSetupStart();
             SetupWizardUtils.resetComponent(this, WizardManager.class);
             Intent intent = new Intent(ACTION_LOAD);
             if (isPrimaryUser()) {
+                Log.v(TAG, "Primary user");
                 intent.putExtra(EXTRA_SCRIPT_URI, getString(R.string.cm_wizard_script_uri));
             } else {
+                Log.v(TAG, "not Primary user");
                 intent.putExtra(EXTRA_SCRIPT_URI, getString(R.string.cm_wizard_script_user_uri));
             }
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
             finish();
-        }
+//        }
     }
 }
