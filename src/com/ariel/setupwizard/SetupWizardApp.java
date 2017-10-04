@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The CyanogenMod Project
+ * Copyright (C) 2013 The ariel Project
  * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,6 +26,7 @@ import android.util.Log;
 import com.ariel.setupwizard.util.NetworkMonitor;
 import com.ariel.setupwizard.util.PhoneMonitor;
 import com.ariel.setupwizard.util.SetupWizardUtils;
+import com.ariel.setupwizard.wizardmanager.WizardManager;
 
 public class SetupWizardApp extends Application {
 
@@ -65,8 +66,8 @@ public class SetupWizardApp extends Application {
     public static final String KEY_PRIVACY_GUARD = "privacy_guard_default";
 
     private static final String[] THEME_PACKAGES = {
-            "org.cyanogenmod.theme.chooser",
-            "org.cyanogenmod.theme.chooser2",
+            "org.ariel.theme.chooser",
+            "org.ariel.theme.chooser2",
             "com.cyngn.theme.chooser",
             "com.cyngn.themestore"
     };

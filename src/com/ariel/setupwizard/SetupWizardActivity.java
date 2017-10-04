@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2016 The ariel Project
  * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ariel.setupwizard.util.SetupWizardUtils;
+import com.ariel.setupwizard.wizardmanager.WizardManager;
 
 public class SetupWizardActivity extends BaseSetupWizardActivity {
     private static final String TAG = SetupWizardActivity.class.getSimpleName();
@@ -39,7 +40,7 @@ public class SetupWizardActivity extends BaseSetupWizardActivity {
         if (LOGV) {
             Log.v(TAG, "onCreate savedInstanceState=" + savedInstanceState);
         }
-        //if (SetupWizardUtils.hasGMS(this)) {
+        if (SetupWizardUtils.hasGMS(this)) {
             if (LOGV) {
                 Log.v(TAG, "Has GMS disabling local wizard manager");
             }
@@ -49,17 +50,18 @@ public class SetupWizardActivity extends BaseSetupWizardActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-//        } else {
-//            onSetupStart();
-//            Intent intent = new Intent(ACTION_LOAD);
-//            if (isPrimaryUser()) {
-//                intent.putExtra(EXTRA_SCRIPT_URI, getString(R.string.cm_wizard_script_uri));
-//            } else {
-//                intent.putExtra(EXTRA_SCRIPT_URI, getString(R.string.cm_wizard_script_user_uri));
-//            }
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_GRANT_READ_URI_PERMISSION);
-//            startActivity(intent);
-//            finish();
-//        }
+        } else {
+            onSetupStart();
+            SetupWizardUtils.resetComponent(this, WizardManager.class);
+            Intent intent = new Intent(ACTION_LOAD);
+            if (isPrimaryUser()) {
+                intent.putExtra(EXTRA_SCRIPT_URI, getString(R.string.cm_wizard_script_uri));
+            } else {
+                intent.putExtra(EXTRA_SCRIPT_URI, getString(R.string.cm_wizard_script_user_uri));
+            }
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+            finish();
+        }
     }
 }

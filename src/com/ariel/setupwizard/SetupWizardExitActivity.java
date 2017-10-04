@@ -41,7 +41,7 @@ public class SetupWizardExitActivity extends BaseSetupWizardActivity {
         if (LOGV) {
             Log.v(TAG, "onCreate savedInstanceState=" + savedInstanceState);
         }
-        //SystemBarHelper.showSystemBars(getWindow(), this);
+        SystemBarHelper.showSystemBars(getWindow(), this);
         SetupWizardUtils.enableStatusBar(this);
         SetupWizardUtils.enableCaptivePortalDetection(this);
         PhoneMonitor.onSetupFinished();
