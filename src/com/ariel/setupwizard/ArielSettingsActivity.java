@@ -139,11 +139,11 @@ public class ArielSettingsActivity extends BaseSetupWizardActivity {
         mNavKeysRow.setOnClickListener(mNavKeysClickListener);
         mNavKeys = (CheckBox) findViewById(R.id.nav_keys_checkbox);
         boolean needsNavBar = true;
-        try {
-            IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
-            needsNavBar = windowManager.needsNavigationBar();
-        } catch (RemoteException e) {
-        }
+//        try {
+//            IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
+//            needsNavBar = windowManager.needsNavigationBar();
+//        } catch (RemoteException e) {
+//        }
         mHideNavKeysRow = hideKeyDisabler(this);
         if (mHideNavKeysRow || needsNavBar) {
             mNavKeysRow.setVisibility(View.GONE);
