@@ -54,12 +54,12 @@
     </WizardAction>
 
     <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_LOCATION_SETTINGS;end" id="location_settings">
-        <result wizard:action="ARIEL_settings" />
-    </WizardAction>
-
-    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_SETTINGS;end" id="ARIEL_settings">
         <result wizard:action="fingerprint_settings" />
     </WizardAction>
+
+    <!--<WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_SETTINGS;end" id="ARIEL_settings">-->
+        <!--<result wizard:action="fingerprint_settings" />-->
+    <!--</WizardAction>-->
 
     <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_FINGERPRINT_SETTINGS;end" id="fingerprint_settings">
         <result wizard:action="lockscreen_settings" />
