@@ -193,11 +193,11 @@ public class SetupWizardUtils {
     }
 
     public static void finishSetupWizard(Context context) {
-        ContentResolver contentResolver = context.getContentResolver();
-        Settings.Global.putInt(contentResolver,
-                Settings.Global.DEVICE_PROVISIONED, 1);
-        Settings.Secure.putInt(contentResolver,
-                Settings.Secure.USER_SETUP_COMPLETE, 1);
+//        ContentResolver contentResolver = context.getContentResolver();
+//        Settings.Global.putInt(contentResolver,
+//                Settings.Global.DEVICE_PROVISIONED, 1);
+//        Settings.Secure.putInt(contentResolver,
+//                Settings.Secure.USER_SETUP_COMPLETE, 1);
 
         disableComponent(context, WizardManager.class);
         disableHome(context);

@@ -17,7 +17,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v13 \
     libphonenumber \
     com.ariel.platform.internal \
-    com.ariel.platform.sdk
+    com.ariel.platform.sdk \
+    zxing-core-1.7
 
 LOCAL_JAVA_LIBRARIES := \
     telephony-common

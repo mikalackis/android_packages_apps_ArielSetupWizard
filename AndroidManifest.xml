@@ -119,6 +119,18 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".QrProvisionActivity"
+            android:label="@string/activity_label_empty"
+            android:excludeFromRecents="true"
+            android:configChanges="mcc|mnc"
+            android:immersive="true"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="com.ariel.setupwizard.ARIEL_QR_PROVISION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".LocaleActivity"
                   android:label="@string/activity_label_empty"
                   android:excludeFromRecents="true"

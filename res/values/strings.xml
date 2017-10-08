@@ -16,6 +16,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name_space">W E L C O M E</string>
+    <string name="app_name_main">ArielOS</string>
+    <string name="app_name_main_second">Guardian</string>
+    <string name="text_separator">|</string>
+
     <string name="app_name">Setup Wizard</string>
     <string name="product_name" translatable="false">ariel</string>
     <string name="os_name" translatable="false">LineageOS</string>
@@ -40,6 +46,7 @@
     <string name="setup_complete">Setup is complete</string>
     <string name="setup_welcome">Welcome</string>
     <string name="setup_locale">Language</string>
+    <string name="setup_qr_provision">Connect to master device</string>
     <string name="setup_wifi">Select Wi-Fi</string>
     <string name="setup_sim_missing">SIM card missing</string>
     <string name="setup_choose_data_sim">Choose a SIM for data</string>

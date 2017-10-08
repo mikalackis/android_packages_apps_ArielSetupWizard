@@ -50,6 +50,10 @@
     </WizardAction>
 
     <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_ENABLE_MOBILE_DATA;end" id="enable_mobile_data">
+        <result wizard:action="qr_provision" />
+    </WizardAction>
+
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_QR_PROVISION;end" id="qr_provision">
         <result wizard:action="location_settings" />
     </WizardAction>
 

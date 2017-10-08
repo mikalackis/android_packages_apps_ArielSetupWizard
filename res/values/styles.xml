@@ -54,17 +54,19 @@
     <style name="PageTitle">
         <item name="android:id">@android:id/title</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="PageSummaryText">
         <item name="android:id">@android:id/summary</item>
         <item name="android:lineSpacingExtra">@dimen/setup_line_spacing</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="SpinnerItem">
         <item name="android:textSize">15sp</item>
         <item name="android:paddingLeft">@dimen/content_margin_left</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="ButtonBar" parent="@android:style/Widget.Material.ActionButton">
@@ -83,13 +85,13 @@
     <style name="ButtonBar.Left">
         <item name="android:paddingStart">34dp</item>
         <item name="android:gravity">center_vertical|start</item>
-        <item name="android:drawableLeft">@drawable/ic_chevron_left_dark</item>
+        <item name="android:drawableLeft">@drawable/setup_wizard_navbar_ic_back</item>
     </style>
 
     <style name="ButtonBar.Right">
         <item name="android:paddingEnd">34dp</item>
         <item name="android:gravity">center_vertical|end</item>
-        <item name="android:drawableRight">@drawable/ic_chevron_right_dark</item>
+        <item name="android:drawableRight">@drawable/setup_wizard_navbar_ic_next</item>
     </style>
 
     <style name="LocaleWidget">
@@ -113,4 +115,13 @@
     </style>
 
     <style name="NoDisplay" parent="@android:style/Theme.NoDisplay" />
+
+    <style name="setup_wizard_navbar_button_style">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:background">@color/primary</item>
+    </style>
+
+    <style name="setup_wizard_navbar_style">
+        <item name="android:background">@color/primary</item>
+    </style>
 </resources>

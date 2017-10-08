@@ -27,7 +27,7 @@
 
     <view class="com.ariel.setupwizard.widget.LocalePicker$CustomEditText"
           android:textAppearance="?android:attr/textAppearanceMedium"
-          android:textColor="?android:attr/textColorPrimary"
+          android:textColor="@color/primary_text"
           android:id="@+id/localepicker_input"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"

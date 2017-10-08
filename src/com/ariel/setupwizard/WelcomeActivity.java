@@ -24,6 +24,14 @@ import android.view.View;
 import android.provider.Settings;
 import android.app.admin.DevicePolicyManager;
 import android.util.Slog;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.app.backup.IBackupManager;
+import android.content.Context;
+import android.os.UserHandle;
+import android.os.RemoteException;
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
+import android.os.ServiceManager;
 
 import com.ariel.setupwizard.util.EnableAccessibilityController;
 
@@ -34,15 +42,22 @@ public class WelcomeActivity extends BaseSetupWizardActivity {
     private View mRootView;
     private EnableAccessibilityController mEnableAccessibilityController;
 
+    private static final String GOOGLE_BACKUP_TRANSPORT1 = "com.google.android.gms/.backup.BackupTransportService";
+
+    private static final String GOOGLE_BACKUP_TRANSPORT2 = "com.google.android.backup/.BackupTransportService";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setNextAllowed(false);
 
         initiArielOS();
 
         mRootView = findViewById(R.id.root);
         setNextText(R.string.next);
         setBackText(R.string.emergency_call);
+
         setBackDrawable(null);
         mEnableAccessibilityController =
                 EnableAccessibilityController.getInstance(getApplicationContext());
@@ -54,7 +69,7 @@ public class WelcomeActivity extends BaseSetupWizardActivity {
         });
     }
 
-    private void initiArielOS(){
+    private void initiArielOS() {
         PackageManager pm = getPackageManager();
 
         int isDeviceProvisioned = Settings.Global.getInt(getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0);
@@ -68,35 +83,32 @@ public class WelcomeActivity extends BaseSetupWizardActivity {
 
                 // try to find google backup transport
                 // and set it, only if google apps are installed
-                if (isGoogleAppsPresent) {
-                    String[] availableTransports = ibm.listAllTransports();
+                String[] availableTransports = ibm.listAllTransports();
 
-                    boolean found = false;
+                boolean found = false;
 
-                    for (int i = 0; i < availableTransports.length; i++) {
-                        String tmpTransport = availableTransports[i];
-                        Slog.i(TAG, "Checking transport: " + tmpTransport);
-                        if (tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT1) ||
-                                tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT2)) {
-                            Slog.i(TAG, "Bingo! Google backup transport found");
-                            // this is the one we need, set it
-                            ibm.selectBackupTransport(tmpTransport);
-                            found = true;
-                            break;
-                        } else {
-                            // this is weird, it has google but not the one we know about
-                            Slog.i(TAG, "Weird! Backup transport " +
-                                    "found but not the one we need: " + tmpTransport);
-                        }
+                for (int i = 0; i < availableTransports.length; i++) {
+                    String tmpTransport = availableTransports[i];
+                    Slog.i(TAG, "Checking transport: " + tmpTransport);
+                    if (tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT1) ||
+                            tmpTransport.equals(GOOGLE_BACKUP_TRANSPORT2)) {
+                        Slog.i(TAG, "Bingo! Google backup transport found");
+                        // this is the one we need, set it
+                        ibm.selectBackupTransport(tmpTransport);
+                        found = true;
+                        break;
+                    } else {
+                        // this is weird, it has google but not the one we know about
+                        Slog.i(TAG, "Weird! Backup transport " +
+                                "found but not the one we need: " + tmpTransport);
                     }
+                }
 
-                    if(!found){
-                        Slog.i(TAG, "We didnt find google backup while gapps are present. Force.");
-                        ibm.selectBackupTransport(GOOGLE_BACKUP_TRANSPORT1);
-                    }
-                    else{
-                        Slog.i(TAG, "All cool, google backup transport set");
-                    }
+                if (!found) {
+                    Slog.i(TAG, "We didnt find google backup while gapps are present. Force.");
+                    ibm.selectBackupTransport(GOOGLE_BACKUP_TRANSPORT1);
+                } else {
+                    Slog.i(TAG, "All cool, google backup transport set");
                 }
             } catch (RemoteException e) {
                 throw new IllegalStateException("Failed activating backup service.", e);
@@ -108,6 +120,11 @@ public class WelcomeActivity extends BaseSetupWizardActivity {
 //                Settings.Secure.putInt(getContentResolver(), Settings.Secure.USER_SETUP_COMPLETE, 1);
 //            }
         }
+        else{
+            Slog.i(TAG, "Device already provisioned!");
+        }
+
+        setNextAllowed(true);
 
         // Add a persistent setting to allow other apps to know the device has been provisioned.
         //Settings.Global.putInt(getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 1);
@@ -154,7 +171,8 @@ public class WelcomeActivity extends BaseSetupWizardActivity {
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 
     @Override
     public void onNavigateBack() {
