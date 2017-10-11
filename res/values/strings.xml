@@ -46,7 +46,9 @@
     <string name="setup_complete">Setup is complete</string>
     <string name="setup_welcome">Welcome</string>
     <string name="setup_locale">Language</string>
-    <string name="setup_qr_provision">Connect to master device</string>
+    <string name="setup_qr_provision">Connect to parent app</string>
+    <string name="setup_download_master_app">Download parent app</string>
+    <string name="setup_download_master_app_description">Scan the QR code to download ArielOS Parental control application from Play Store. Once installed, proceed with the setup by clicking on Next button.</string>
     <string name="setup_wifi">Select Wi-Fi</string>
     <string name="setup_sim_missing">SIM card missing</string>
     <string name="setup_choose_data_sim">Choose a SIM for data</string>

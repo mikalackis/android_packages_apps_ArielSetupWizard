@@ -50,6 +50,10 @@
     </WizardAction>
 
     <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_ENABLE_MOBILE_DATA;end" id="enable_mobile_data">
+        <result wizard:action="master_app_download" />
+    </WizardAction>
+
+    <WizardAction wizard:uri="intent:#Intent;action=com.ariel.setupwizard.ARIEL_MASTER_APP_DOWNLOAD;end" id="master_app_download">
         <result wizard:action="qr_provision" />
     </WizardAction>
 
