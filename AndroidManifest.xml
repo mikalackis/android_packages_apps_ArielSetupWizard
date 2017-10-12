@@ -32,9 +32,9 @@
                 android:excludeFromRecents="true">
             <intent-filter android:priority="10">
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.DEVICE_INITIALIZATION_WIZARD" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.SETUP_WIZARD" />
             </intent-filter>
         </activity>
     </application>
