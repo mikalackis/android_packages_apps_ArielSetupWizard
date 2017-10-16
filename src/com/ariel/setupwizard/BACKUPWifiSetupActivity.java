@@ -25,7 +25,7 @@ import android.content.Intent;
 
 import com.ariel.setupwizard.util.SetupWizardUtils;
 
-public class WifiSetupActivity extends SubBaseActivity {
+public class BACKUPWifiSetupActivity extends SubBaseActivity {
 
     public static final String TAG = WifiSetupActivity.class.getSimpleName();
 

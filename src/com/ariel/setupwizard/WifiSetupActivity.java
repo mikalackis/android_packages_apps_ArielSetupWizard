@@ -22,11 +22,23 @@ import static com.ariel.setupwizard.SetupWizardApp.EXTRA_MATERIAL_LIGHT;
 import static com.ariel.setupwizard.SetupWizardApp.REQUEST_CODE_SETUP_WIFI;
 
 import android.content.Intent;
-
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.wifi.ScanResult;
+import android.util.Log;
+import android.widget.Toast;
 import com.ariel.setupwizard.util.SetupWizardUtils;
 import com.android.setupwizardlib.SetupWizardListLayout;
+import com.android.setupwizardlib.view.NavigationBar;
+
+import android.widget.ArrayAdapter;
+import android.content.Context;
+import android.os.Bundle;
 
 import android.net.wifi.WifiManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WifiSetupActivity extends BaseSetupWizardActivity {
 
@@ -57,19 +69,19 @@ public class WifiSetupActivity extends BaseSetupWizardActivity {
 //        ArrayAdapter<Integer> itemsAdapter =
 //                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mWifiList);
 //        layout.setAdapter(itemsAdapter);
-        layout.setHeaderText("SetupWizardListLayout");
-        layout.setIllustration(getResources().getDrawable(R.drawable.bg2));
-        layout.setIllustrationAspectRatio(4f);
-        layout.getNavigationBar().setNavigationBarListener(new NavigationBar.NavigationBarListener() {
+        mListLayout.setHeaderText("SetupWizardListLayout");
+        //mListLayout.setIllustration(getResources().getDrawable(R.drawable.bg2));
+        mListLayout.setIllustrationAspectRatio(4f);
+        mListLayout.getNavigationBar().setNavigationBarListener(new NavigationBar.NavigationBarListener() {
             @Override
             public void onNavigateBack() {
-                onBackPressed();
+                WifiSetupActivity.this.onNavigateBack();
             }
 
             @Override
             public void onNavigateNext() {
                 //startActivity(new Intent(ThirdActivity.this, SecondActivity.class));
-                super.onNavigateNext();
+                WifiSetupActivity.this.onNavigateNext();
             }
         });
     }
@@ -83,7 +95,7 @@ public class WifiSetupActivity extends BaseSetupWizardActivity {
         arraylist.clear();
         registerReceiver(wifi_receiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
-        wifi.startScan();
+        mWifiManager.startScan();
 
         Log.d("WifScanner", "scanWifiNetworks");
 
@@ -98,7 +110,7 @@ public class WifiSetupActivity extends BaseSetupWizardActivity {
         public void onReceive(Context c, Intent intent)
         {
             Log.d("WifScanner", "onReceive");
-            results = wifi.getScanResults();
+            results = mWifiManager.getScanResults();
             size = results.size();
             unregisterReceiver(this);
 
