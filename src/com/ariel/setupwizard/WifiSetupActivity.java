@@ -22,121 +22,34 @@ import static com.ariel.setupwizard.SetupWizardApp.EXTRA_MATERIAL_LIGHT;
 import static com.ariel.setupwizard.SetupWizardApp.REQUEST_CODE_SETUP_WIFI;
 
 import android.content.Intent;
-import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
-import android.net.wifi.ScanResult;
-import android.util.Log;
-import android.widget.Toast;
+
 import com.ariel.setupwizard.util.SetupWizardUtils;
-import com.android.setupwizardlib.SetupWizardListLayout;
-import com.android.setupwizardlib.view.NavigationBar;
 
-import android.widget.ArrayAdapter;
-import android.content.Context;
-import android.os.Bundle;
-
-import android.net.wifi.WifiManager;
-
-import java.util.ArrayList;
-import java.util.List;
-import android.widget.ListView;
-
-public class WifiSetupActivity extends BaseSetupWizardActivity {
-
-    ListView lv;
-    private WifiManager mWifiManager;
-
-    String ITEM_KEY = "key";
-    ArrayList<String> arraylist = new ArrayList<>();
-    ArrayAdapter adapter;
-    List<ScanResult> results;
-    int size = 0;
+public class WifiSetupActivity extends SubBaseActivity {
 
     public static final String TAG = WifiSetupActivity.class.getSimpleName();
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        lv = (ListView)findViewById(R.id.wifilist);
-
-        mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-        this.adapter =  new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arraylist);
-        lv.setAdapter(this.adapter);
-
-        scanWifiNetworks();
-    }
-
-    private void scanWifiNetworks(){
-
-        if (mWifiManager.isWifiEnabled() == false) {
-            mWifiManager.setWifiEnabled(true);
+    protected void onStartSubactivity() {
+        tryEnablingWifi();
+        Intent intent = new Intent("android.net.wifi.PICK_WIFI_NETWORK");
+        if (SetupWizardUtils.hasLeanback(this)) {
+            intent.setComponent(SetupWizardUtils.mTvwifisettingsActivity);
         }
-
-        arraylist.clear();
-        registerReceiver(wifi_receiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-
-        mWifiManager.startScan();
-
-        Log.d("WifScanner", "scanWifiNetworks");
-
-        Toast.makeText(this, "Scanning....", Toast.LENGTH_SHORT).show();
-
-    }
-
-    BroadcastReceiver wifi_receiver= new BroadcastReceiver()
-    {
-
-        @Override
-        public void onReceive(Context c, Intent intent)
-        {
-            Log.d("WifScanner", "onReceive");
-            results = mWifiManager.getScanResults();
-            size = results.size();
-            unregisterReceiver(this);
-
-            try
-            {
-                while (size >= 0)
-                {
-                    size--;
-                    arraylist.add(results.get(size).SSID);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-            catch (Exception e)
-            {
-                Log.w("WifScanner", "Exception: "+e);
-
-            }
-
-
-        }
-    };
-
-    @Override
-    public void onNavigateNext() {
-        super.onNavigateNext();
+        intent.putExtra(SetupWizardApp.EXTRA_FIRST_RUN, true);
+        intent.putExtra(SetupWizardApp.EXTRA_ALLOW_SKIP, true);
+        intent.putExtra(SetupWizardApp.EXTRA_USE_IMMERSIVE, true);
+        intent.putExtra(SetupWizardApp.EXTRA_THEME, EXTRA_MATERIAL_LIGHT);
+        intent.putExtra(SetupWizardApp.EXTRA_AUTO_FINISH, false);
+        intent.putExtra("extra_prefs_show_button_bar", true);
+        intent.putExtra(":settings:show_fragment_as_subsetting", true);
+        startSubactivity(intent, REQUEST_CODE_SETUP_WIFI);
     }
 
     @Override
-    protected int getTransition() {
+    protected int getSubactivityNextTransition() {
         return TRANSITION_ID_SLIDE;
-    }
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.setup_wifi_page;
-    }
-
-    @Override
-    protected int getTitleResId() {
-        return R.string.setup_wifi;
-    }
-
-    @Override
-    protected int getIconResId() {
-        return R.drawable.ic_sim;
     }
 
 }
