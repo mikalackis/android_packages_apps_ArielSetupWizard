@@ -15,16 +15,27 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.android.setupwizardlib.SetupWizardListLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/setup_wifi"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
-    tools:context="com.ariel.setupwizard.WifiSetupActivity">
+    android:background="@color/primary">
 
+    <include layout="@layout/header_condensed" />
+
+    <FrameLayout android:id="@+id/page"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/wifilist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </FrameLayout>
     <fragment android:name="com.android.setupwizard.navigationbar.SetupWizardNavBar"
         android:id="@+id/navigation_bar"
         style="@style/setup_wizard_navbar_style" />
-</com.android.setupwizardlib.SetupWizardListLayout>
+</LinearLayout>

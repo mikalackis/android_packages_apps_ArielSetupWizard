@@ -39,11 +39,11 @@ import android.net.wifi.WifiManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.ListView;
 
 public class WifiSetupActivity extends BaseSetupWizardActivity {
 
-    private SetupWizardListLayout mListLayout;
-
+    ListView lv;
     private WifiManager mWifiManager;
 
     String ITEM_KEY = "key";
@@ -57,33 +57,14 @@ public class WifiSetupActivity extends BaseSetupWizardActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListLayout = (SetupWizardListLayout) findViewById(R.id.setup_wifi);
+        lv = (ListView)findViewById(R.id.wifilist);
 
         mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         this.adapter =  new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arraylist);
-        mListLayout.setAdapter(this.adapter);
+        lv.setAdapter(this.adapter);
 
         scanWifiNetworks();
-
-//        ArrayAdapter<Integer> itemsAdapter =
-//                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mWifiList);
-//        layout.setAdapter(itemsAdapter);
-        mListLayout.setHeaderText("SetupWizardListLayout");
-        //mListLayout.setIllustration(getResources().getDrawable(R.drawable.bg2));
-        mListLayout.setIllustrationAspectRatio(4f);
-        mListLayout.getNavigationBar().setNavigationBarListener(new NavigationBar.NavigationBarListener() {
-            @Override
-            public void onNavigateBack() {
-                WifiSetupActivity.this.onNavigateBack();
-            }
-
-            @Override
-            public void onNavigateNext() {
-                //startActivity(new Intent(ThirdActivity.this, SecondActivity.class));
-                WifiSetupActivity.this.onNavigateNext();
-            }
-        });
     }
 
     private void scanWifiNetworks(){
