@@ -66,6 +66,8 @@ import com.ariel.internal.util.PackageManagerUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Slog;
+
 import ariel.providers.ArielSettings;
 
 public class SetupWizardUtils {
@@ -169,13 +171,17 @@ public class SetupWizardUtils {
     }
 
     public static boolean hasGMS(Context context) {
+        Slog.i(TAG, "Asking for GMS and SetupWizard");
         if (PackageManagerUtils.isAppInstalled(context, GMS_PACKAGE) &&
                 PackageManagerUtils.isAppInstalled(context, GMS_SUW_PACKAGE)) {
+            Slog.i(TAG, "Found GMS and SetupWizard");
             PackageManager packageManager = context.getPackageManager();
             if (LOGV) {
                 Log.v(TAG, GMS_SUW_PACKAGE + " state = " +
                         packageManager.getApplicationEnabledSetting(GMS_SUW_PACKAGE));
             }
+            Slog.i(TAG, "Returning value: "+(packageManager.getApplicationEnabledSetting(GMS_SUW_PACKAGE) !=
+                    COMPONENT_ENABLED_STATE_DISABLED));
             return packageManager.getApplicationEnabledSetting(GMS_SUW_PACKAGE) !=
                     COMPONENT_ENABLED_STATE_DISABLED;
         }
@@ -193,18 +199,18 @@ public class SetupWizardUtils {
     }
 
     public static void finishSetupWizard(Context context) {
-//        ContentResolver contentResolver = context.getContentResolver();
-//        Settings.Global.putInt(contentResolver,
-//                Settings.Global.DEVICE_PROVISIONED, 1);
-//        Settings.Secure.putInt(contentResolver,
-//                Settings.Secure.USER_SETUP_COMPLETE, 1);
+        ContentResolver contentResolver = context.getContentResolver();
+        Settings.Global.putInt(contentResolver,
+                Settings.Global.DEVICE_PROVISIONED, 1);
+        Settings.Secure.putInt(contentResolver,
+                Settings.Secure.USER_SETUP_COMPLETE, 1);
 
         disableComponent(context, WizardManager.class);
         disableHome(context);
         context.sendStickyBroadcastAsUser(
                 new Intent(SetupWizardApp.ACTION_FINISHED),
                 Binder.getCallingUserHandle());
-        disableComponentSets(context, GET_RECEIVERS | GET_SERVICES);
+        disableComponentSets(context, GET_RECEIVERS | GET_SERVICES | GET_ACTIVITIES);
     }
 
     public static boolean hasLeanback(Context context) {

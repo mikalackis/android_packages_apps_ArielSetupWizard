@@ -81,7 +81,7 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
     private View.OnClickListener mSetDataSimClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            SubscriptionInfo subInfoRecord = (SubscriptionInfo)view.getTag();
+            SubscriptionInfo subInfoRecord = (SubscriptionInfo) view.getTag();
             if (subInfoRecord != null) {
                 changeDataSub(subInfoRecord);
             }
@@ -136,7 +136,7 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
 
                 @Override
                 public void onDefaultDataSubscriptionChangeRequested(int currentSubId,
-                        int newSubId) {
+                                                                     int newSubId) {
                     if (LOGV) {
                         Log.v(TAG, "onDefaultDataSubscriptionChangeRequested{" +
                                 "currentSubId='" + currentSubId + '\'' +
@@ -184,9 +184,11 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
         int simCount =
                 subInfoRecords != null ? subInfoRecords.size() : 0;
         mSubInfoRecords = new SparseArray<>(simCount);
-        for (SubscriptionInfo subInfoRecord : subInfoRecords) {
-            mSubInfoRecords.put(subInfoRecord.getSimSlotIndex(), subInfoRecord);
-            updateSignalStrength(subInfoRecord);
+        if (subInfoRecords != null) {
+            for (SubscriptionInfo subInfoRecord : subInfoRecords) {
+                mSubInfoRecords.put(subInfoRecord.getSimSlotIndex(), subInfoRecord);
+                updateSignalStrength(subInfoRecord);
+            }
         }
         mNameViews = new SparseArray<>(simCount);
         mSignalViews = new SparseArray<>(simCount);
@@ -364,9 +366,9 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
 
     private void enableRows(boolean enabled) {
         for (int i = 0; i < mRows.size(); i++) {
-            final View v =  mRows.get(mRows.keyAt(i));
+            final View v = mRows.get(mRows.keyAt(i));
             v.setEnabled(enabled);
-            final SubscriptionInfo subInfoRecord = (SubscriptionInfo)v.getTag();
+            final SubscriptionInfo subInfoRecord = (SubscriptionInfo) v.getTag();
             if (subInfoRecord != null) {
                 updateCarrierText(subInfoRecord);
             }
@@ -412,7 +414,7 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
                         "signalStrength='" + signalStrength + '\'' +
                         "signalStrengthLevel='" + ((signalStrength != null) ?
                         signalStrength.getLevel() : "null") + '\'' +
-                        ", subInfoRecord.getSimSlotIndex() =" + subInfoRecord.getSimSlotIndex()  +
+                        ", subInfoRecord.getSimSlotIndex() =" + subInfoRecord.getSimSlotIndex() +
                         '}');
             }
             if (!hasService(subInfoRecord)) {
@@ -448,7 +450,7 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
         boolean retVal;
         ServiceState serviceState = mServiceStates.get(subInfoRecord.getSimSlotIndex());
         if (serviceState == null) {
-            serviceState  = mPhoneMonitor
+            serviceState = mPhoneMonitor
                     .getServiceStateForSubscriber(subInfoRecord.getSubscriptionId());
             mServiceStates.put(subInfoRecord.getSimSlotIndex(), serviceState);
         }
@@ -457,14 +459,14 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
                 Log.v(TAG, "hasService{" +
                         "serviceState.getVoiceRegState()='" + serviceState.getVoiceRegState() + '\'' +
                         "serviceState.getVoiceRegState()='" + serviceState.getVoiceRegState() + '\'' +
-                        ", subInfoRecord.getSimSlotIndex() =" + subInfoRecord.getSimSlotIndex()  +
+                        ", subInfoRecord.getSimSlotIndex() =" + subInfoRecord.getSimSlotIndex() +
                         '}');
             }
             // Consider the device to be in service if either voice or data service is available.
             // Some SIM cards are marketed as data-only and do not support voice service, and on
             // these SIM cards, we want to show signal bars for data service as well as the "no
             // service" or "emergency calls only" text that indicates that voice is not available.
-            switch(serviceState.getVoiceRegState()) {
+            switch (serviceState.getVoiceRegState()) {
                 case ServiceState.STATE_POWER_OFF:
                     retVal = false;
                     break;

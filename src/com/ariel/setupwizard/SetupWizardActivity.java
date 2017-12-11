@@ -30,6 +30,7 @@ import android.util.Log;
 
 import com.ariel.setupwizard.util.SetupWizardUtils;
 import com.ariel.setupwizard.wizardmanager.WizardManager;
+import android.util.Slog;
 
 public class SetupWizardActivity extends BaseSetupWizardActivity {
     private static final String TAG = SetupWizardActivity.class.getSimpleName();
@@ -37,23 +38,24 @@ public class SetupWizardActivity extends BaseSetupWizardActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (LOGV) {
-            Log.v(TAG, "onCreate savedInstanceState=" + savedInstanceState);
-        }
-//        if (SetupWizardUtils.hasGMS(this)) {
-//            if (LOGV) {
-//                Log.v(TAG, "Has GMS disabling local wizard manager");
-//            }
-//            Intent intent = new Intent("android.intent.action.MAIN");
-//            intent.addCategory("android.intent.category.HOME");
-//            SetupWizardUtils.disableComponentsForGMS(this);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent);
-//            finish();
-//        } else {
+        Slog.i(TAG, "Entering setup wizard main activity");
+        if (SetupWizardUtils.hasGMS(this)) {
+            Slog.i(TAG, "This device has GMS");
+            if (LOGV) {
+                Log.v(TAG, "Has GMS disabling local wizard manager");
+            }
+            Intent intent = new Intent("android.intent.action.MAIN");
+            intent.addCategory("android.intent.category.HOME");
+            SetupWizardUtils.disableComponentsForGMS(this);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        } else {
             onSetupStart();
             SetupWizardUtils.resetComponent(this, WizardManager.class);
             Intent intent = new Intent(ACTION_LOAD);
+            Log.v(TAG, "URI1: "+getString(R.string.cm_wizard_script_uri));
+            Log.v(TAG, "URI2: "+getString(R.string.cm_wizard_script_user_uri));
             if (isPrimaryUser()) {
                 Log.v(TAG, "Primary user");
                 intent.putExtra(EXTRA_SCRIPT_URI, getString(R.string.cm_wizard_script_uri));
@@ -64,6 +66,6 @@ public class SetupWizardActivity extends BaseSetupWizardActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
             finish();
-//        }
+        }
     }
 }

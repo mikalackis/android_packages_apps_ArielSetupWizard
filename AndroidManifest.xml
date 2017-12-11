@@ -70,6 +70,8 @@
         <activity android:theme="@style/NoDisplay"
                   android:label="@string/activity_label_empty"
                   android:name=".wizardmanager.WizardManager"
+                  android:directBootAware="true"
+                  android:launchMode="singleTask"
                   android:exported="true"
                   android:excludeFromRecents="true"
                   android:configChanges="keyboard|keyboardHidden|mcc|mnc|orientation|screenSize"
@@ -84,6 +86,7 @@
         <activity android:name=".SetupWizardActivity"
                   android:label="@string/activity_label_empty"
                   android:lockTaskMode="normal"
+                  android:directBootAware="true"
                   android:launchMode="singleTask"
                   android:excludeFromRecents="true"
                   android:configChanges="keyboard|keyboardHidden|mcc|mnc|orientation|screenSize"
@@ -91,18 +94,19 @@
                   android:windowSoftInputMode="stateAlwaysHidden"
                   android:theme="@style/NoDisplay">
 
-            <intent-filter android:priority="9">
+            <intent-filter android:priority="6">
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.DEVICE_INITIALIZATION_WIZARD"/>
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <!--<category android:name="android.intent.category.SETUP_WIZARD" />-->
+                <category android:name="android.intent.category.SETUP_WIZARD"/>
             </intent-filter>
         </activity>
 
         <activity android:name=".BluetoothSetupActivity"
                   android:label="@string/activity_label_empty"
                   android:excludeFromRecents="true"
+                  android:directBootAware="true"
                   android:configChanges="mcc|mnc"
                   android:immersive="true"
                   android:windowSoftInputMode="stateAlwaysHidden">
@@ -116,6 +120,7 @@
                   android:label="@string/activity_label_empty"
                   android:excludeFromRecents="true"
                   android:configChanges="mcc|mnc"
+                  android:directBootAware="true"
                   android:immersive="true"
                   android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>

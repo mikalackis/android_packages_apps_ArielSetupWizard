@@ -44,7 +44,7 @@ public class SetupWizardExitActivity extends BaseSetupWizardActivity {
         SystemBarHelper.showSystemBars(getWindow(), this);
         SetupWizardUtils.enableStatusBar(this);
         SetupWizardUtils.enableCaptivePortalDetection(this);
-        PhoneMonitor.onSetupFinished();
+        //PhoneMonitor.onSetupFinished();
         //launchHome();
         finish();
         applyForwardTransition(TRANSITION_ID_FADE);

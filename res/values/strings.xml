@@ -27,7 +27,7 @@
     <string name="os_name" translatable="false">LineageOS</string>
     <string name="default_theme_name" translatable="false">Material</string>
 
-    <string name="cm_wizard_script_uri" translatable="false">android.resource://com.ariel.setupwizard/raw/cm_wizard_script</string>
+    <string name="cm_wizard_script_uri" translatable="false">android.resource://com.ariel.setupwizard/raw/ariel_wizard_script</string>
     <string name="cm_wizard_script_user_uri" translatable="false">android.resource://com.ariel.setupwizard/raw/cm_wizard_script_user</string>
 
     <!-- Partner SUW Strings -->
